@@ -50,6 +50,9 @@ def emotion_detector(text_to_analyze):
             response.reason,
             _safe_error_body(response),
         )
+    if response.status_code == 400:
+        return {**dict.fromkeys(EMOTION_NAMES), "dominant_emotion": None}
+
     response.raise_for_status()
     try:
         payload = response.json()
